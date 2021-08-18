@@ -73,3 +73,29 @@ function reset_rps () {
     document.getElementById("rps_button").replaceWith(img);
 
 }
+
+// Challenge 4
+var all_buttons = document.getElementsByTagName("button");
+var all_buttons_copy = [];
+for (let i = 0; i < all_buttons.length; i++) {
+    all_buttons_copy.push(all_buttons[i]);
+}
+
+function buttonChange(selected_val) {
+    for (let i = 0; i <all_buttons.length; i++) {
+        switch (selected_val) {
+            case "random":
+                break;
+            case "red":
+                all_buttons_copy[i].removeAttribute("class", all_buttons[i].getElementsByTagName(class));
+                all_buttons_copy[i].setAttribute("class", "btn btn-danger");
+                break;
+            case "green":
+                break;
+            case "reset":
+                break;
+            default:
+                break;
+        }
+    }
+}
