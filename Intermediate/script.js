@@ -76,26 +76,36 @@ function reset_rps () {
 
 // Challenge 4
 var all_buttons = document.getElementsByTagName("button");
+var random_array = ['btn-primary','btn-danger','btn-warning','btn-success'];
 var all_buttons_copy = [];
 for (let i = 0; i < all_buttons.length; i++) {
-    all_buttons_copy.push(all_buttons[i]);
+    all_buttons_copy.push(all_buttons[i].classList[1]);
 }
 
 function buttonChange(selected_val) {
     for (let i = 0; i <all_buttons.length; i++) {
-        switch (selected_val) {
+        //console.log(all_buttons_copy[])
+        all_buttons[i].classList.remove('btn-primary');
+        all_buttons[i].classList.remove('btn-danger');
+        all_buttons[i].classList.remove('btn-warning');
+        all_buttons[i].classList.remove('btn-success');
+        switch (selected_val.value) {
             case "random":
+                all_buttons[i].classList.add(random_array[Math.floor(Math.random() * 4)]);
                 break;
             case "red":
-                all_buttons_copy[i].removeAttribute("class", all_buttons[i].getElementsByTagName(class));
-                all_buttons_copy[i].setAttribute("class", "btn btn-danger");
+                all_buttons[i].classList.add('btn-danger');
                 break;
             case "green":
+                all_buttons[i].classList.add('btn-success');
                 break;
             case "reset":
+                all_buttons[i].classList.add(all_buttons_copy[i]);
                 break;
             default:
                 break;
         }
     }
 }
+
+// Challenge 5 
