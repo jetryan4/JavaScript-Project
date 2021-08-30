@@ -109,3 +109,113 @@ function buttonChange(selected_val) {
 }
 
 // Challenge 5 
+
+// Variables
+var my_score = 0;
+var dealer_score = 0;
+var cards_left = 52;
+var deck = {
+    "0":4,
+    "1":4,
+    "2":4,
+    "3":4,
+    "4":4,
+    "5":4,
+    "6":4,
+    "7":4,
+    "8":4,
+    "9":4,
+    "10":4,
+    "11":4,
+    "12":4,
+};
+var card_name = {
+    "0":'A.png',
+    "1":'2.png',
+    "2":'3.png',
+    "3":'4.png',
+    "4":'5.png',
+    "5":'6.png',
+    "6":'7.png',
+    "7":'8.png',
+    "8":'9.png',
+    "9":'10.png',
+    "10":'J.png',
+    "11":'Q.png',
+    "12":'K.png',
+};
+var card_value = {
+    "0":1,
+    "1":2,
+    "2":3,
+    "3":4,
+    "4":5,
+    "5":6,
+    "6":7,
+    "7":8,
+    "8":9,
+    "9":10,
+    "10":10,
+    "11":10,
+    "12":10,
+};
+// on click reset game
+function reset_bj_game() {
+    deck = {
+        "0":4,
+        "1":4,
+        "2":4,
+        "3":4,
+        "4":4,
+        "5":4,
+        "6":4,
+        "7":4,
+        "8":4,
+        "9":4,
+        "10":4,
+        "11":4,
+        "12":4,
+    };
+    //reset the scores to 0
+    my_score = 0;
+    dealer_score = 0;
+    cards_left = 52;
+    document.getElementById("your-bj-score").innerHTML = my_score;
+    document.getElementById("dealer-bj-score").innerHTML = dealer_score;
+    //clear the field of cards
+    document.getElementById("your-score-box").innerHTML = '<h2>You: <span id="your-bj-score">0</span></h2>';
+    document.getElementById("dealer-score-box").innerHTML = '<h2>Dealer: <span id="dealer-bj-score">0</span></h2>';
+}
+
+function hit_button() {
+    //pick a random card from deck
+    if (cards_left === 0 ){
+        return;
+    }
+    var card = Math.floor(Math.random() * 13);
+    while (deck[card] === 0 && cards_left > 0) {
+        card = Math.floor(Math.random() * 13);
+    }
+    deck[card]--;
+    cards_left--;
+    my_score = card_value[card] + my_score;
+    //place card on screen
+    var img = document.createElement('img');
+    var div = document.getElementById('your-score-box');
+    var file_card = "./images/" + card_name[card];
+    img.setAttribute("src", file_card);
+    div.appendChild(img);
+    //update score on screen
+    if(my_score > 21) {
+        //Display bust
+        document.getElementById("your-bj-score").innerHTML = 'BUST';
+        return;
+    }
+    else {
+        document.getElementById("your-bj-score").innerHTML = my_score;
+        return;
+    }
+    //console.log(card);
+    //console.log(deck);
+
+}
