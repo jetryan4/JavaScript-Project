@@ -1,4 +1,4 @@
-// script 
+// script
 // Challenge 1: Your Age in Days
 
 function ageInDays () {
@@ -108,7 +108,23 @@ function buttonChange(selected_val) {
     }
 }
 
-// Challenge 5 
+// Challenge 5
+
+//Object Initialization
+class Card {
+    constructor(name,value){
+        this.name = name;
+        this.value = value;
+    }
+}
+class Deck {
+    constructor(){
+        number_of_cards = 52;
+        
+    }
+    reset_deck()
+}
+
 
 // Variables
 var my_score = 0;
@@ -116,6 +132,7 @@ var dealer_score = 0;
 var cards_left = 52;
 var ace_value = 1;
 var my_turn = true;
+
 var deck = {
     "0":4,
     "1":4,
@@ -163,7 +180,7 @@ var card_value = {
 };
 // on click reset game
 function reset_bj_game() {
-    calculate_score();
+    //calculate_score();
     deck = {
         "0":4,
         "1":4,
@@ -223,7 +240,7 @@ function hit_button() {
         whos_turn = 'dealer-score-box';
         dealer_score = card_value[card] + dealer_score;
     }
-    
+
     //place card on screen
     var img = document.createElement('img');
     var div = document.getElementById(whos_turn);
@@ -260,5 +277,5 @@ function stand_next() {
 }
 
 function calculate_score() {
-    
+
 }
