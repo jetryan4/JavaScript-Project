@@ -114,6 +114,8 @@ function buttonChange(selected_val) {
 var my_score = 0;
 var dealer_score = 0;
 var cards_left = 52;
+var ace_value = 1;
+var my_turn = true;
 var deck = {
     "0":4,
     "1":4,
@@ -145,7 +147,7 @@ var card_name = {
     "12":'K.png',
 };
 var card_value = {
-    "0":1,
+    "0":ace_value,
     "1":2,
     "2":3,
     "3":4,
@@ -161,6 +163,7 @@ var card_value = {
 };
 // on click reset game
 function reset_bj_game() {
+    calculate_score();
     deck = {
         "0":4,
         "1":4,
@@ -180,11 +183,24 @@ function reset_bj_game() {
     my_score = 0;
     dealer_score = 0;
     cards_left = 52;
+    my_turn = true;
     document.getElementById("your-bj-score").innerHTML = my_score;
     document.getElementById("dealer-bj-score").innerHTML = dealer_score;
     //clear the field of cards
     document.getElementById("your-score-box").innerHTML = '<h2>You: <span id="your-bj-score">0</span></h2>';
     document.getElementById("dealer-score-box").innerHTML = '<h2>Dealer: <span id="dealer-bj-score">0</span></h2>';
+}
+
+function switch_A() {
+    if (ace_value === 1){
+        ace_value = 11;
+        document.getElementById("a-low-high").innerHTML = 'A is High';
+    }
+    else {
+        ace_value = 1;
+        document.getElementById("a-low-high").innerHTML = 'A is Low';
+    }
+    card_value["0"] = ace_value;
 }
 
 function hit_button() {
@@ -198,24 +214,51 @@ function hit_button() {
     }
     deck[card]--;
     cards_left--;
-    my_score = card_value[card] + my_score;
+    var whos_turn;
+    if (my_turn) {
+        whos_turn = 'your-score-box';
+        my_score = card_value[card] + my_score;
+    }
+    else {
+        whos_turn = 'dealer-score-box';
+        dealer_score = card_value[card] + dealer_score;
+    }
+    
     //place card on screen
     var img = document.createElement('img');
-    var div = document.getElementById('your-score-box');
+    var div = document.getElementById(whos_turn);
     var file_card = "./images/" + card_name[card];
     img.setAttribute("src", file_card);
     div.appendChild(img);
     //update score on screen
-    if(my_score > 21) {
+    if(my_score > 21 && my_turn) {
         //Display bust
         document.getElementById("your-bj-score").innerHTML = 'BUST';
+        stand_next();
         return;
     }
-    else {
+    else if (my_score <= 21 && my_turn){
         document.getElementById("your-bj-score").innerHTML = my_score;
+        return;
+    }
+    else if (dealer_score > 21 && !my_turn) {
+        document.getElementById("dealer-bj-score").innerHTML = 'BUST';
+        calculate_score()
+        return;
+    }
+    else if (dealer_score <= 21 && !my_turn){
+        document.getElementById("dealer-bj-score").innerHTML = dealer_score;
         return;
     }
     //console.log(card);
     //console.log(deck);
 
+}
+
+function stand_next() {
+    my_turn = !my_turn;
+}
+
+function calculate_score() {
+    
 }
