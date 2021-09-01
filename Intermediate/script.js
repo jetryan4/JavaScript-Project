@@ -288,6 +288,9 @@ function hit_button() {
 }
 
 function stand_next() {
+    if (document.getElementById("dealer-bj-score").innerHTML > 0 && document.getElementById("your-bj-score").innerHTML > 0) {
+        calculate_score();
+    }
     my_turn = !my_turn;
 }
 
