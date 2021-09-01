@@ -110,22 +110,6 @@ function buttonChange(selected_val) {
 
 // Challenge 5
 
-//Object Initialization
-class Card {
-    constructor(name,value){
-        this.name = name;
-        this.value = value;
-    }
-}
-class Deck {
-    constructor(){
-        number_of_cards = 52;
-        
-    }
-    reset_deck()
-}
-
-
 // Variables
 var my_score = 0;
 var dealer_score = 0;
@@ -133,21 +117,6 @@ var cards_left = 52;
 var ace_value = 1;
 var my_turn = true;
 
-var deck = {
-    "0":4,
-    "1":4,
-    "2":4,
-    "3":4,
-    "4":4,
-    "5":4,
-    "6":4,
-    "7":4,
-    "8":4,
-    "9":4,
-    "10":4,
-    "11":4,
-    "12":4,
-};
 var card_name = {
     "0":'A.png',
     "1":'2.png',
@@ -178,6 +147,52 @@ var card_value = {
     "11":10,
     "12":10,
 };
+//Object Initialization
+class Card {
+    constructor(name,value){
+        this.name = name;
+        this.value = value;
+    }
+}
+class Deck {
+    constructor(){
+        this.number_of_cards = 52;
+        this.cards = [];
+        for (let i = 0; i < 4; i++) {
+            for (let j = 0; j < 13; j++) {
+                temp = new Card(card_name[j], card_value[j]);
+                this.cards.push(temp);
+            }
+        }
+    }
+    reset_deck() {
+
+    }
+}
+
+class Player {
+    constructor(name, score) {
+        this.name = name;
+        this.score = score;
+    }
+}
+
+var deck = {
+    "0":4,
+    "1":4,
+    "2":4,
+    "3":4,
+    "4":4,
+    "5":4,
+    "6":4,
+    "7":4,
+    "8":4,
+    "9":4,
+    "10":4,
+    "11":4,
+    "12":4,
+};
+
 // on click reset game
 function reset_bj_game() {
     //calculate_score();
@@ -251,7 +266,7 @@ function hit_button() {
     if(my_score > 21 && my_turn) {
         //Display bust
         document.getElementById("your-bj-score").innerHTML = 'BUST';
-        stand_next();
+        calculate_score();
         return;
     }
     else if (my_score <= 21 && my_turn){
@@ -260,7 +275,7 @@ function hit_button() {
     }
     else if (dealer_score > 21 && !my_turn) {
         document.getElementById("dealer-bj-score").innerHTML = 'BUST';
-        calculate_score()
+        calculate_score();
         return;
     }
     else if (dealer_score <= 21 && !my_turn){
@@ -277,5 +292,24 @@ function stand_next() {
 }
 
 function calculate_score() {
-
+    if (document.querySelector('#your-bj-score').innerHTML === 'BUST') {
+        //add win to dealer
+        document.getElementById("loses").innerHTML++;
+    }
+    else if (document.querySelector('#dealer-bj-score').innerHTML === 'BUST') {
+        //add win
+        document.getElementById("wins").innerHTML++;
+    }
+    else if (document.querySelector('#your-bj-score').innerHTML === document.querySelector('#dealer-bj-score').innerHTML) {
+        // add tie
+        document.getElementById("draws").innerHTML++;
+    }
+    else if (document.querySelector('#your-bj-score').innerHTML > document.querySelector('#dealer-bj-score').innerHTML) {
+        // add win
+        document.getElementById("wins").innerHTML++;
+    }
+    else {
+        // add loss
+        document.getElementById("loses").innerHTML++;
+    }
 }
